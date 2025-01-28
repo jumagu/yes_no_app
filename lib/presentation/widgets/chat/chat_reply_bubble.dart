@@ -24,7 +24,7 @@ class ChatReplyBubble extends StatelessWidget {
                 spacing: 5,
                 children: [
                   Text(
-                    'hola',
+                    '',
                     style: TextStyle(color: Colors.white),
                   ),
                   _ChatImageBubble()
@@ -39,28 +39,29 @@ class ChatReplyBubble extends StatelessWidget {
 }
 
 class _ChatImageBubble extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final ColorScheme colors = Theme.of(context).colorScheme;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.network(
         'https://yesno.wtf/assets/yes/14-b57c6dc03aa15a4b18f53eb50d6197ee.gif',
         semanticLabel: 'A gif sent by an anonymous',
-        width: size.width * 0.7,
+        width: size.width,
         height: 200,
         fit: BoxFit.cover,
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
 
           return SizedBox(
-            width: size.width * 0.7,
+            width: size.width,
             height: 200,
             child: Center(
               child: CircularProgressIndicator(
                 semanticsLabel: 'Loading...',
+                color: colors.surface,
                 value: loadingProgress.expectedTotalBytes != null
                     ? loadingProgress.cumulativeBytesLoaded / 
                         loadingProgress.expectedTotalBytes!
