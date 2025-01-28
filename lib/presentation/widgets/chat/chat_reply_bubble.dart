@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ChatReceiverBubble extends StatelessWidget {
-  const ChatReceiverBubble({super.key});
+class ChatReplyBubble extends StatelessWidget {
+  const ChatReplyBubble({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +47,28 @@ class _ChatImageBubble extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.network(
+        'https://yesno.wtf/assets/yes/14-b57c6dc03aa15a4b18f53eb50d6197ee.gif',
+        semanticLabel: 'A gif sent by an anonymous',
         width: size.width * 0.7,
         height: 200,
         fit: BoxFit.cover,
-        'https://yesno.wtf/assets/yes/14-b57c6dc03aa15a4b18f53eb50d6197ee.gif'
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+
+          return SizedBox(
+            width: size.width * 0.7,
+            height: 200,
+            child: Center(
+              child: CircularProgressIndicator(
+                semanticsLabel: 'Loading...',
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / 
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
